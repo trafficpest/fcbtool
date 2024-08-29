@@ -17,7 +17,7 @@ This project provides tools for managing the Behringer FCB1010 MIDI Foot Control
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/yourusername/fcb1010-tools.git
+    git clone https://github.com/trafficpest/fcbtool.git
     cd fcb1010-tools
     ```
 
