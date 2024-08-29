@@ -1,5 +1,5 @@
-#ifndef FCB2CSV_H
-#define FCB2CSV_H
+#ifndef FCB_H
+#define FCB_H
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -75,13 +75,11 @@ bool parse_sysex(FCB1010 *fcb, uint8_t *data, size_t size);
 
 bool get_raw_sysex(const FCB1010 *fcb, uint8_t *data);
 
-void print_fcb1010(const FCB1010 *fcb);
-
 bool write_csv(const FCB1010 *fcb, const char *filename);
 
 bool parse_csv_line(char *line, char *parsed_data[], int expected_columns);
 
 bool load_csv(FCB1010 *fcb, const char *filename);
 
-#endif // FCB2CSV_H
+#endif 
 

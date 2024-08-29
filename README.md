@@ -14,11 +14,13 @@ This project provides tools for managing the Behringer FCB1010 MIDI Foot Control
 - **Backup SysEx Files:** Automatically back up SysEx files with timestamped filenames.
 
 ## Installation
+This project comes with a binary for x64 linux built on Debian 12 stable
+you will need to run `make clean` prior to `make` to remove it
 
 1. **Clone the repository:**
     ```sh
     git clone https://github.com/trafficpest/fcbtool.git
-    cd fcb1010-tools
+    cd fcbtool
     ```
 
 2. **Build the project:**

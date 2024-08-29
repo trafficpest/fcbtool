@@ -1,7 +1,64 @@
 #include <alsa/asoundlib.h>
 #include <ncurses.h>
 #include <stdio.h>
+#include "fcb.h"
+#include "fcb_io.h"
 #include "midi.h"
+#include "ui_ncurses.h"
+
+void handle_sysex_receive() {
+    char devices[MAX_DEVICES][128];
+    int device_count;
+
+    list_midi_devices(devices, &device_count);
+
+    if (device_count == 0) {
+        printw("No MIDI devices found.\n");
+        getch();
+        return;
+    }
+
+    int selected_device = select_midi_device(devices, device_count);
+    if (selected_device == -1) return;
+
+    char sysex_filename[512];
+    snprintf(sysex_filename, sizeof(sysex_filename), "%s/.fcb1010/dump.syx", getenv("HOME"));
+
+    printw("Attempting to receive SysEx...\n");
+    refresh();
+    receive_sysex_dump(devices[selected_device], sysex_filename);
+
+    printw("Operation completed. Press any key to return to the main menu.\n");
+    refresh();
+    getch();
+}
+
+void handle_sysex_send() {
+    char devices[MAX_DEVICES][128];
+    int device_count;
+
+    list_midi_devices(devices, &device_count);
+
+    if (device_count == 0) {
+        printw("No MIDI devices found.\n");
+        getch();
+        return;
+    }
+
+    int selected_device = select_midi_device(devices, device_count);
+    if (selected_device == -1) return;
+
+    char sysex_filename[512];
+    snprintf(sysex_filename, sizeof(sysex_filename), "%s/.fcb1010/dump.syx", getenv("HOME"));
+
+    printw("Attempting to send SysEx...\n");
+    refresh();
+    send_sysex_dump(devices[selected_device], sysex_filename);
+
+    printw("Operation completed. Press any key to return to the main menu.\n");
+    refresh();
+    getch();
+}
 
 void list_midi_devices(char devices[MAX_DEVICES][128], int *count) {
     int card = -1;

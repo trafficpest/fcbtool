@@ -1,6 +1,58 @@
 #include <stddef.h>
-#include "fcb.h"
 #include <ncurses.h>
+#include "fcb.h"
+#include "midi.h"
+#include "ui_ncurses.h"
+
+int display_main_menu() {
+    clear();
+    printw("Select an option:\n");
+    printw("1: Receive Midi SysEx & Save\n");
+    printw("2: Send SysEx file over Midi\n");
+    printw("3: Parse and Inspect dump.syx\n");
+    printw("4: Create CSV from dump.syx\n");
+    printw("5: Create Sysex from CSV\n");
+    printw("6: Backup SysEx Dump\n");
+    printw("q: Quit\n");
+    refresh();
+
+    return getch();
+}
+
+int select_midi_device(char devices[MAX_DEVICES][128], int device_count) {
+    int selected_device = 0;
+
+    while (1) {
+        clear();
+        printw("Select a MIDI device:\n");
+        for (int i = 0; i < device_count; i++) {
+            if (i == selected_device) {
+                attron(A_REVERSE);
+            }
+            printw("%d: %s\n", i, devices[i]);
+            if (i == selected_device) {
+                attroff(A_REVERSE);
+            }
+        }
+
+        int ch = getch();
+        switch (ch) {
+            case 'q':
+                return -1;  // Return -1 to indicate quitting
+            case KEY_UP:
+                if (selected_device > 0) selected_device--;
+                break;
+            case KEY_DOWN:
+                if (selected_device < device_count - 1) selected_device++;
+                break;
+            case '\n':
+                return selected_device;  // Return the selected device index
+            default:
+                break;
+        }
+    }
+}
+
 
 void print_fcb1010(const FCB1010 *fcb) {
     int ch;

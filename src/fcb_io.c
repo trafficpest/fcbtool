@@ -8,6 +8,94 @@
 #include <unistd.h>
 #include <ncurses.h>
 #include "fcb.h"
+#include "midi.h"
+#include "ui_ncurses.h"
+#include "fcb_io.h"
+
+void handle_parse_and_inspect() {
+    char sysex_filename[512];
+    snprintf(sysex_filename, sizeof(sysex_filename), "%s/.fcb1010/dump.syx", getenv("HOME"));
+
+    FILE *sysex_file = fopen(sysex_filename, "rb");
+    if (!sysex_file) {
+        printw("Failed to open SysEx file: %s\n", sysex_filename);
+        refresh();
+        getch();
+        return;
+    }
+
+    uint8_t sysex_data[SYSEX_SIZE];
+    size_t read_size = fread(sysex_data, 1, SYSEX_SIZE, sysex_file);
+    fclose(sysex_file);
+
+    if (read_size != SYSEX_SIZE) {
+        printw("Error: SysEx file size does not match expected size\n");
+        refresh();
+        getch();
+        return;
+    }
+
+    FCB1010 fcb;
+    init_fcb1010(&fcb);
+
+    if (!parse_sysex(&fcb, sysex_data, SYSEX_SIZE)) {
+        printw("Failed to parse SysEx data\n");
+        refresh();
+        getch();
+        return;
+    }
+
+    print_fcb1010(&fcb);  // Function to display the parsed FCB1010 data
+}
+
+void handle_create_csv() {
+    char sysex_filename[512];
+    snprintf(sysex_filename, sizeof(sysex_filename), "%s/.fcb1010/dump.syx", getenv("HOME"));
+
+    FILE *sysex_file = fopen(sysex_filename, "rb");
+    if (!sysex_file) {
+        printw("Failed to open SysEx file: %s\n", sysex_filename);
+        refresh();
+        getch();
+        return;
+    }
+
+    uint8_t sysex_data[SYSEX_SIZE];
+    size_t read_size = fread(sysex_data, 1, SYSEX_SIZE, sysex_file);
+    fclose(sysex_file);
+
+    if (read_size != SYSEX_SIZE) {
+        printw("Error: SysEx file size does not match expected size\n");
+        refresh();
+        getch();
+        return;
+    }
+
+    FCB1010 fcb;
+    init_fcb1010(&fcb);
+
+    if (!parse_sysex(&fcb, sysex_data, SYSEX_SIZE)) {
+        printw("Failed to parse SysEx data\n");
+        refresh();
+        getch();
+        return;
+    }
+
+    char csv_filename[512];
+    snprintf(csv_filename, sizeof(csv_filename), "%s/.fcb1010/fcb1010.csv", getenv("HOME"));
+
+    if (!write_csv(&fcb, csv_filename)) {
+        printw("Failed to write CSV file: %s\n", csv_filename);
+        refresh();
+        getch();
+        return;
+    }
+
+    printw("CSV file written successfully. Press any key to return to the main menu.\n");
+    refresh();
+    getch();
+}
+
 
 void create_fcb_home_dir() {
     const char *backup_dir = getenv("HOME");

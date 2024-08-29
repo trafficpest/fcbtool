@@ -4,6 +4,8 @@
 #define MAX_DEVICES 10
 #define BUFFER_SIZE 1024
 
+void handle_sysex_receive();
+void handle_sysex_send();
 void list_midi_devices(char devices[MAX_DEVICES][128], int *count);
 void receive_sysex_dump(const char *device_name, const char *filename);
 void send_sysex_dump(const char *device_name, const char *filename);
