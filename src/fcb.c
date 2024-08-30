@@ -278,10 +278,10 @@ bool get_raw_sysex(const FCB1010 *fcb, uint8_t *data) {
     if (fcb->merge) data[2330] |= 16;
     if (fcb->switch1) data[2334] |= 2;
     if (fcb->switch2) data[2329] |= 64;
-    data[2343] = 15; //fcb->expA_calibration_min;
-    data[2344] = 108; //fcb->expA_calibration_max;
-    data[2345] = 14; //fcb->expB_calibration_min;
-    data[2346] = 102; //fcb->expB_calibration_max;
+    data[2343] = 0; //fcb->expA_calibration_min;
+    data[2344] = 127; //fcb->expA_calibration_max;
+    data[2345] = 0; //fcb->expB_calibration_min;
+    data[2346] = 127; //fcb->expB_calibration_max;
 
     data[2350] = 10;
     data[2351] = 247;

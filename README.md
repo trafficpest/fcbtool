@@ -46,7 +46,8 @@ Use the on-screen menu to select the desired operation.
 - **Backup Files:** Backup files are saved in `~/.fcb1010/backups/` with a `yymmdd_hhmm.syx` format.
 
 ## Dumps
-- In the dump folder you will find the three default sysex dumps for the device.
+- In the dump folder you will find the three default sysex dumps for the device 
+and my custom sysex for Line6 Catalyst series of Amplifiers.
 
 ## Acknowledgments
 This project was greatly helped by the work of Brian Walton's (brian@riban.co.uk) Python functions, which were converted to C for this application.

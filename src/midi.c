@@ -180,7 +180,7 @@ void send_sysex_dump(const char *device_name, const char *filename) {
     sscanf(device_name, "%15s", actual_device_name);
 
     printw("Attempting to open MIDI output on device %s...\n", actual_device_name);
-    printw("Set your device in receive mode then hit enter.");
+    printw("Set your device in receive mode then hit enter.\n");
     refresh();
     getch();  // Wait for user to press a key
     if ((err = snd_rawmidi_open(NULL, &output, actual_device_name, 0)) < 0) {
