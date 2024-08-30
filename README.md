@@ -31,6 +31,10 @@ you will need to run `make clean` prior to `make` to remove it
 3. **Locate the binary:**
    The binary will be generated in the `./build/bin/` directory.
 
+- Optional
+    If you would like to install the app to the system place it in you bin PATH
+    System wide: `sudo cp ./build/bin/fcbtool /usr/local/bin`
+    or to User `cp ./build/bin/fcbtool ~/<path to your user bin dir>`
 ## Usage
 
 Run the application from the terminal:
