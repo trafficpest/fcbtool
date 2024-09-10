@@ -10,11 +10,7 @@
 #include "fcb_io.h"
 
 int main() {
-    initscr();
-    noecho();
-    cbreak();
-    curs_set(0);
-    keypad(stdscr, TRUE);
+    initialize_ui();
 
     create_fcb_home_dir();  // Ensure the ~/.fcb1010 directory is created
 

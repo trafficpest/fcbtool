@@ -28,5 +28,11 @@ $(TARGET): $(OBJS)
 clean:
 	rm -f $(OBJS) $(TARGET)
 
+# Run target
+run: $(TARGET)
+	./$(TARGET)
+
+debug: clean all run
+
 .PHONY: all clean
 
